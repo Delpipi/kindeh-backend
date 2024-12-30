@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -22,7 +24,7 @@ public class Role implements Serializable {
     private Integer id;
 
     @Enumerated(EnumType.STRING)
-    private RoleType name;
+    private RoleName name;
 
     private Instant createdAt;
 

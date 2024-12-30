@@ -1,6 +1,6 @@
 package net.alexandrepaulkouame.entities;
 
-public enum RoleType {
+public enum RoleName {
     RENTER,
     OWNER,
     ADMIN,

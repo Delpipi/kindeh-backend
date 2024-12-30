@@ -59,8 +59,6 @@ public class Customer implements Serializable {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    @JsonSerialize(using = net.alexandrepaulkouame.utils.RoleSetToStringListSerializer.class)
-    @JsonDeserialize(using = net.alexandrepaulkouame.utils.StringListToRoleSetDeserializer.class)
     private Set<Role> roles = new HashSet<>();
 
     private String resetToken;
@@ -79,6 +77,7 @@ public class Customer implements Serializable {
     protected void onCreate() {
         createdAt = Instant.now();
         updatedAt = Instant.now();
+        isActive = true;
     }
 
     @PreUpdate
