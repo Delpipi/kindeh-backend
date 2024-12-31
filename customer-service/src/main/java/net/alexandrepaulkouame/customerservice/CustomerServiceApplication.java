@@ -5,7 +5,6 @@ import net.alexandrepaulkouame.entities.Role;
 import net.alexandrepaulkouame.entities.RoleName;
 import net.alexandrepaulkouame.repositories.CustomerRepository;
 import net.alexandrepaulkouame.repositories.RoleRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -75,11 +74,6 @@ public class CustomerServiceApplication {
 			List<Customer> customers = customerRepository.findAll();
 			customers.forEach(System.out::println);
 		};
-	}
-
-	@Bean
-	public ModelMapper modelMapper(){
-		return new ModelMapper();
 	}
 
 }

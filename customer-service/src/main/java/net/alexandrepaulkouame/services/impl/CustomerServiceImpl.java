@@ -6,10 +6,8 @@ import net.alexandrepaulkouame.entities.Role;
 import net.alexandrepaulkouame.repositories.CustomerRepository;
 import net.alexandrepaulkouame.repositories.RoleRepository;
 import net.alexandrepaulkouame.services.CustomerService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -23,9 +21,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private RoleRepository roleRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Override
     public List<Customer> getAllCustomers() {

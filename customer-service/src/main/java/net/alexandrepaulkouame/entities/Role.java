@@ -5,8 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
 @Getter
@@ -14,7 +13,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
