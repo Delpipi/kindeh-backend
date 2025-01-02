@@ -200,9 +200,16 @@ pipeline {
                 stage('Build Docker Image for Config Service') {
                     steps {
                         script {
-                            dir('config-service') {
-                                docker.build("${registry}/kindeh-config-service:V$BUILD_NUMBER")
+                             withCredentials([string(credentialsId: 'delpipi-git-token', variable: 'GITHUB_TOKEN')]) {
+                                // Pass GITHUB_TOKEN as a build argument during Docker build
+                                dir('config-service') {
+                                    docker.build(
+                                        "${registry}/kindeh-config-service:V$BUILD_NUMBER",
+                                        "--build-arg GITHUB_TOKEN=${GITHUB_TOKEN}"
+                                    )
+                                }
                             }
+
                         }
                     }
                 }
