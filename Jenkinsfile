@@ -18,6 +18,8 @@ pipeline {
                             dir('discovery-service') {
                                 // Build the discovery-service project using Maven
                                 sh 'mvn clean install -DskipTests'
+                                // Unit Tests
+                                sh 'mvn test'
                                 // Integration Test
                                 sh 'mvn verify -DskipUnitTests'
                                 // Code Analysis
@@ -39,6 +41,8 @@ pipeline {
                             dir('config-service') {
                                 // Build the config-service project using Maven
                                 sh 'mvn clean install -DskipTests'
+                                // Unit Tests
+                                sh 'mvn test'
                                 // Integration Test
                                 sh 'mvn verify -DskipUnitTests'
                                 // Code Analysis
@@ -60,6 +64,8 @@ pipeline {
                             dir('customer-service') {
                                 // Build the customer-service project using Maven
                                 sh 'mvn clean install -DskipTests'
+                                // Unit Tests
+                                sh 'mvn test'
                                 // Integration Test
                                 sh 'mvn verify -DskipUnitTests'
                                 // Code Analysis
@@ -81,6 +87,8 @@ pipeline {
                             dir('gateway-service') {
                                 // Build the gateway-service project using Maven
                                 sh 'mvn clean install -DskipTests'
+                                // Unit Tests
+                                sh 'mvn test'
                                 // Integration Test
                                 sh 'mvn verify -DskipUnitTests'
                                 // Code Analysis
