@@ -109,7 +109,7 @@ pipeline {
                 stage('Sonar Code Analysis of Discovery Service') {
                     steps {
                         dir('discovery-service') {
-                              withSonarQubeEnv('sonar-pro') {
+                              withSonarQubeEnv('sonarserver') {
                                  sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=discovery-service \
                                     -Dsonar.projectName=discovery-service-repo \
                                     -Dsonar.projectVersion=1.0 \
@@ -130,7 +130,7 @@ pipeline {
                 stage('Sonar Code Analysis of Config Service') {
                     steps {
                         dir('config-service') {
-                              withSonarQubeEnv('sonar-pro') {
+                              withSonarQubeEnv('sonarserver') {
                                  sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=config-service \
                                     -Dsonar.projectName=config-service-repo \
                                     -Dsonar.projectVersion=1.0 \
@@ -151,7 +151,7 @@ pipeline {
                 stage('Sonar Code Analysis of Customer Service') {
                     steps {
                         dir('customer-service') {
-                              withSonarQubeEnv('sonar-pro') {
+                              withSonarQubeEnv('sonarserver') {
                                  sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=customer-service \
                                     -Dsonar.projectName=customer-service-repo \
                                     -Dsonar.projectVersion=1.0 \
@@ -172,7 +172,7 @@ pipeline {
                 stage('Sonar Code Analysis of Gateway Service') {
                     steps {
                          dir('gateway-service') {
-                              withSonarQubeEnv('sonar-pro') {
+                              withSonarQubeEnv('sonarserver') {
                                  sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=gateway-service \
                                     -Dsonar.projectName=gateway-service-repo \
                                     -Dsonar.projectVersion=1.0 \
