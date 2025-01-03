@@ -205,23 +205,23 @@ pipeline {
 
             parallel {
 
-                stage('Build Docker Image for Config Service') {
-                    steps {
-                       script {
-                          dir('customer-service') {
-                               docker.build("${registry}/kindeh-config-service:V$BUILD_NUMBER")
-                          }
-                       }
-                    }
-                }
-
                 stage('Build Docker Image for Discovery Service') {
                     steps {
                         script {
                             dir('discovery-service') {
-                                docker.build("${registry}/kindeh-discovery-service:V$BUILD_NUMBER")
+                                dockerImageDiscovery = docker.build registry + "/kindeh-discovery-service:V$BUILD_NUMBER"
                             }
                         }
+                    }
+                }
+
+                stage('Build Docker Image for Config Service') {
+                    steps {
+                       script {
+                          dir('config-service') {
+                             dockerImageConfig = docker.build registry + "/kindeh-config-service:V$BUILD_NUMBER"
+                          }
+                       }
                     }
                 }
 
@@ -229,7 +229,7 @@ pipeline {
                     steps {
                         script {
                             dir('customer-service') {
-                                docker.build("${registry}/kindeh-customer-service:V$BUILD_NUMBER")
+                                dockerImageCustomer = docker.build registry + "/kindeh-customer-service:V$BUILD_NUMBER"
                             }
                         }
                     }
@@ -239,7 +239,7 @@ pipeline {
                     steps {
                         script {
                             dir('gateway-service') {
-                                docker.build("${registry}/kindeh-gateway-service:V$BUILD_NUMBER")
+                                dockerImageGateway = docker.build registry + "/kindeh-gateway-service:V$BUILD_NUMBER"
                             }
                         }
                     }
@@ -252,14 +252,19 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', registryCredential) {
-                        docker.push("${registry}/kindeh-config-service:V$BUILD_NUMBER")
-                        docker.push("${registry}/kindeh-config-service:latest")
-                        docker.push("${registry}/kindeh-customer-service:V$BUILD_NUMBER")
-                        docker.push("${registry}/kindeh-customer-service:latest")
-                        docker.push("${registry}/kindeh-discovery-service:V$BUILD_NUMBER")
-                        docker.push("${registry}/kindeh-discovery-service:latest")
-                        docker.push("${registry}/kindeh-gateway-service:V$BUILD_NUMBER")
-                        docker.push("${registry}/kindeh-gateway-service:latest")
+                        //push discovery-service docker image
+                        dockerImageDiscovery.push("V$BUILD_NUMBER")
+                        dockerImageDiscovery.push('latest')
+                        //push config-service docker image
+                        dockerImageConfig.push("V$BUILD_NUMBER")
+                        dockerImageConfig.push('latest')
+                        //push customer-service docker image
+                        dockerImageCustomer.push("V$BUILD_NUMBER")
+                        dockerImageCustomer.push('latest')
+                        //push gateway-service docker image
+                        dockerImageGateway.push("V$BUILD_NUMBER")
+                        dockerImageGateway.push('latest')
+
                     }
                 }
             }
@@ -267,10 +272,11 @@ pipeline {
 
         stage('Remove UNUSED DOCKER IMAGE') {
             steps {
-                sh "docker rmi ${registry}/kindeh-config-service:V$BUILD_NUMBER"
-                sh "docker rmi ${registry}/kindeh-customer-service:V$BUILD_NUMBER"
-                sh "docker rmi ${registry}/kindeh-discovery-service:V$BUILD_NUMBER"
-                sh "docker rmi ${registry}/kindeh-gateway-service:V$BUILD_NUMBER"
+             sh "docker rmi $registry:V$BUILD_NUMBER"
+                sh "docker rmi $registry/kindeh-config-service:V$BUILD_NUMBER"
+                sh "docker rmi $registry/kindeh-customer-service:V$BUILD_NUMBER"
+                sh "docker rmi $registry/kindeh-discovery-service:V$BUILD_NUMBER"
+                sh "docker rmi $registry/kindeh-gateway-service:V$BUILD_NUMBER"
             }
         }
     }
