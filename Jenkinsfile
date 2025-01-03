@@ -272,7 +272,6 @@ pipeline {
 
         stage('Remove UNUSED DOCKER IMAGE') {
             steps {
-             sh "docker rmi $registry:V$BUILD_NUMBER"
                 sh "docker rmi $registry/kindeh-config-service:V$BUILD_NUMBER"
                 sh "docker rmi $registry/kindeh-customer-service:V$BUILD_NUMBER"
                 sh "docker rmi $registry/kindeh-discovery-service:V$BUILD_NUMBER"
