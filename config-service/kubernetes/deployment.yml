@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-service
+  namespace: kindeh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-service
+  template:
+    metadata:
+      labels:
+        app: config-service
+    spec:
+      containers:
+        - name: config-service
+          image: alexandrepaulkouame/kindeh-config-service:latest
+          ports:
+          - containerPort: 9999
+          env:
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: http://discovery-service.kindeh.svc.cluster.local:8761/eureka
+            - name: GITHUB_USERNAME
+              valueForm:
+                secretKeyRef:
+                  name: github-credentials
+                  key: username
+            - name: GITHUB_TOKEN
+              valueForm:
+                secretKeyRef:
+                  name: github-credentials
+                  key: token
